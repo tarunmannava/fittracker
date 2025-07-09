@@ -1,15 +1,56 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Dumbbell, Plus, TrendingUp, Calendar, User } from 'lucide-react';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Dumbbell, Plus, TrendingUp, Calendar } from 'lucide-react';
 import Onboarding from './Onboarding';
+import ProfileDropdown from './components/ProfileDropdown';
+import Settings from './components/Settings';
+import ProfileView from './components/ProfileView';
+import { resetOnboarding } from './features/user/userSlice';
 
 function App() {
+  const dispatch = useDispatch();
   const userState = useSelector(state => state.user);
   const workoutsState = useSelector(state => state.workouts);
+  
+  const [currentView, setCurrentView] = useState('dashboard'); // 'dashboard', 'settings', 'profile'
 
   // Show onboarding if user hasn't completed it
   if (!userState.isOnboarded) {
     return <Onboarding />;
+  }
+
+  // Handle navigation from profile dropdown
+  const handleNavigation = (action) => {
+    switch (action) {
+      case 'profile':
+        setCurrentView('profile');
+        break;
+      case 'settings':
+        setCurrentView('settings');
+        break;
+      case 'reset':
+        if (window.confirm('This will reset all your data and return you to onboarding. Are you sure?')) {
+          dispatch(resetOnboarding());
+        }
+        break;
+      default:
+        break;
+    }
+  };
+
+  // Show profile page
+  if (currentView === 'profile') {
+    return (
+      <ProfileView 
+        onBack={() => setCurrentView('dashboard')} 
+        onEdit={() => setCurrentView('settings')} 
+      />
+    );
+  }
+
+  // Show settings page
+  if (currentView === 'settings') {
+    return <Settings onBack={() => setCurrentView('dashboard')} />;
   }
 
   // Get user's name for personalization
@@ -29,9 +70,7 @@ function App() {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <button className="p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100">
-                <User className="h-5 w-5" />
-              </button>
+              <ProfileDropdown onNavigate={handleNavigation} />
               <button className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700 transition-colors">
                 <Plus className="h-4 w-4" />
                 <span>Add Workout</span>
