@@ -1,21 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import userSlice from '../features/user/userSlice';
-import workoutsSlice from '../features/workouts/workoutsSlice';
-import exercisesSlice from '../features/exercises/exercisesSlice';
-import progressSlice from '../features/progress/progressSlice';
-import timerSlice from '../features/timer/timerSlice';
+import userReducer from '../features/user/userSlice';
+import workoutsReducer from '../features/workouts/workoutsSlice';
+import exercisesReducer from '../features/exercises/exercisesSlice';
+import progressReducer from '../features/progress/progressSlice';
+import timerReducer from '../features/timer/timerSlice';
 
 export const store = configureStore({
   reducer: {
-    user: userSlice,
-    workouts: workoutsSlice,
-    exercises: exercisesSlice,
-    progress: progressSlice,
-    timer: timerSlice,
+    user: userReducer,
+    workouts: workoutsReducer,
+    exercises: exercisesReducer,
+    progress: progressReducer,
+    timer: timerReducer,
   },
-  devTools: process.env.NODE_ENV !== 'production',
 });
 
-// Remove these TypeScript lines:
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;
+export default store;
