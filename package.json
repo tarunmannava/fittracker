@@ -1,0 +1,13 @@
+{
+  "name": "fittracker-microservices",
+  "version": "1.0.0",
+  "description": "Fitness tracking app with microservices architecture",
+  "scripts": {
+    "dev": "docker-compose up -d",
+    "down": "docker-compose down",
+    "logs": "docker-compose logs -f"
+  },
+  "workspaces": [
+    "mobile-app"
+  ]
+}
