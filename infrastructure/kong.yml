@@ -1,0 +1,38 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: user-service
+    url: http://user-service:8000
+    routes:
+      - name: user-routes
+        paths:
+          - /api/users
+
+  - name: workout-service
+    url: http://workout-service:8000
+    routes:
+      - name: workout-routes
+        paths:
+          - /api/workouts
+
+  - name: exercise-service
+    url: http://exercise-service:8000
+    routes:
+      - name: exercise-routes
+        paths:
+          - /api/exercises
+
+  - name: progress-service
+    url: http://progress-service:8000
+    routes:
+      - name: progress-routes
+        paths:
+          - /api/progress
+
+  - name: ai-coach-service
+    url: http://ai-coach-service:8000
+    routes:
+      - name: ai-coach-routes
+        paths:
+          - /api/ai-coach
